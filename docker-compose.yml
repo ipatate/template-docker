@@ -14,9 +14,6 @@ php:
     build: containers/container-php
     links:
       - db:webstack_mysql
-      - elasticsearch:webstack_elasticsearch
-      - kibana:webstack_kibana
-      - neo4j:webstack_neo4j
       - redis:webstack_redis
     volumes:
         - ./logs/app:/var/www/app/var/logs
