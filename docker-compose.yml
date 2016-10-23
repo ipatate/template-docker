@@ -1,0 +1,47 @@
+# Webstack PHP
+nginx:
+  image: nginx:stable
+  volumes:
+    - ./logs/nginx/:/var/log/nginx
+    - ./config/nginx/:/etc/nginx/conf.d
+    - ./www:/var/www/app/
+  links:
+    - php:fpm
+  ports:
+    - 80:80
+
+php:
+    build: containers/container-php
+    links:
+      - db:webstack_mysql
+      - elasticsearch:webstack_elasticsearch
+      - kibana:webstack_kibana
+      - neo4j:webstack_neo4j
+      - redis:webstack_redis
+    volumes:
+        - ./logs/app:/var/www/app/var/logs
+        - ./config/php:/usr/local/etc/php/conf.d
+        - ./www:/var/www/app/
+
+db:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    volumes:
+      - ./config/mysql:/etc/mysql/conf.d:ro
+      - ./data/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+
+phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db:db
+    ports:
+      - 8080:80
+    environment:
+      PMA_USER : root
+      PMA_PASSWORD : root
+
+redis:
+    image: redis:3.2
