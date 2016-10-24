@@ -8,20 +8,20 @@ VOLUME /var/www
 #	&& docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
 #	&& docker-php-ext-install gd mbstring pdo pdo_mysql pdo_pgsql
 
-RUN apt-get update && apt-get install -y \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libmcrypt-dev \
-        libpng12-dev \
-        mysql-client \
-        git \
-        zip \
-        unzip \
-        nano \
-        vim \
-    && docker-php-ext-install -j$(nproc) iconv mcrypt \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd
+#RUN apt-get update && apt-get install -y \
+#        libfreetype6-dev \
+#        libjpeg62-turbo-dev \
+#        libmcrypt-dev \
+#        libpng12-dev \
+#        mysql-client \
+#        git \
+#        zip \
+#        unzip \
+#        nano \
+#        vim \
+#    && docker-php-ext-install -j$(nproc) iconv mcrypt \
+#    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+#    && docker-php-ext-install -j$(nproc) gd
 
 #RUN docker-php-ext-install pdo mysql pdo_mysql mysqli
 RUN docker-php-ext-install pdo pdo_mysql
@@ -37,4 +37,3 @@ RUN echo "date.timezone = 'Europe/Paris'" >> /usr/local/etc/php/conf.d/docker-ph
  && echo "log_errors = 'On'" >> /usr/local/etc/php/conf.d/docker-php-weka-php.ini \
  && echo "error_reporting = 'E_ALL'" >> /usr/local/etc/php/conf.d/docker-php-weka-php.ini \
  && echo "max_execution_time = '3600'" >> /usr/local/etc/php/conf.d/docker-php-weka-php.ini
-
